@@ -1,0 +1,37 @@
+schema: spec-driven
+
+# 專案脈絡（OpenSpec 2.0.0 以 config.yaml 取代舊版 project.md）
+context: |
+  Language: zh-TW
+  All artifacts must be written in zh-TW.
+  Keep OpenSpec structural headings (Purpose / Requirements / Requirement / Scenario)
+  and SHALL/MUST/WHEN/THEN keywords in English.
+
+  ## 專案目的
+  DIC3 作業：以 OpenSpec 重構「Energy Detective：建築用電異常調查 AI Agent」提案
+  （來源：https://github.com/benson103081/energy-detective-agent ，第25組，唯讀引用）。
+  Agent 讓設施管理者以自然語言指定建築與期間，取得附證據 ID、可追溯的用電異常
+  調查報告；輸出是「待查假說＋下一步查核」，不是設備故障確診或已驗證節電量。
+
+  ## 階段
+  Proposal 階段：只有文件與規格，Agent 程式與實驗尚未實作。specs/ 描述「預定系統」
+  的行為契約；所有成效數字只能是 expected / target，不得寫成實驗結果。
+
+  ## 技術棧（預定）
+  Python 3、pandas、numpy、pydantic、單一 LLM 供應商 SDK（支援結構化輸出）；
+  本機 CSV／JSON／Markdown；不需向量資料庫、微調、雲端 IoT 平台。
+
+  ## 領域背景
+  資料：Building Data Genome 2（BDG2）raw electricity（逐時 kWh）、weather、metadata；
+  以歷史 CSV 重播模擬 IoT 資料流。基準 B0＝訓練期全域中位數、B1＝同星期×小時中位數；
+  校準期 |殘差| P99 為門檻；相鄰同向警示合併為事件。領域規則：同時段比較、
+  非使用時段負載、天氣背景、長段零值；量測與驗證（M&V）邊界：偏離量 ≠ 節電量、
+  總表 ≠ 設備根因。
+
+  ## 慣例
+  - 八大模組 capability：user-scenario、query-input、planner-reasoning、data-retrieval、
+    analytics-engine、domain-knowledge、decision-recommendation、output-interaction；
+    評估協議另置 offline-evaluation；提案文件本身的驗收契約置 proposal-document。
+  - 每個 Requirement 一個行為、使用 SHALL/MUST，至少一個 #### Scenario（WHEN/THEN）。
+  - 數字、門檻（90% 有效率、P99、10 次工具呼叫等）皆為專題暫定設定，不是領域標準。
+  - 引用一律列於 docs/references.md；查不到者標 [UNVERIFIED]。
